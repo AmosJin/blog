@@ -1,0 +1,75 @@
+<!-- 管理文章模块 -->
+<div class="content">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><label class="checkbox"><input type="checkbox" title="全选" id="article_manage_0" onclick="article_manage_select_all()">全选</label></th>
+        <th>文章标题</th>
+        <th>发表日期</th>
+        <th>允许评论</th>
+        <th>文章可见</th>
+        <th>喜欢量</th>
+        <th>浏览量</th>
+        <th>评论量</th>
+        <th><button class="btn btn-danger btn-mini" onclick="rticle_manage_delete_selected()">删除所选</button></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for article in articles %}
+      <input type="hidden" value="{{ article.id }}" id="article_manage_hidden_{{ forloop.counter }}">
+        <tr>
+          <td><label class="checkbox"><input type="checkbox" id="article_manage_{{ forloop.counter }}"></label></td>
+          <td>
+            <button class="btn btn-link" onclick="article_preview(this.value, {{ articles.number }})" value="{{ article.id }}">{{ article.article_title|truncatechars:30 }}</button>
+          </td>
+          <td>{{ article.article_date|date:"Y-M-d H:m" }}</td>
+          <td>
+            {% if article.article_allow_comment %}
+            <span class="label label-success">允许</span>
+            {% else %}
+            <span class="label">不允许</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if article.article_visible %}
+            <i class="icon-eye-open"></i> 可见
+            {% else %}
+            <i class="icon-eye-close"></i> 不可见
+            {% endif %}
+          </td>
+          <td id="article_favorite_times_td">{{ article.article_favorite_times }}</td>
+          <td id="article_browsed_times_td">{{ article.article_browsed_times }}</td>
+          <td id="article_comment_times_td">{{ article.comment_set.count }}</td>
+          <td><button class="btn btn-danger btn-mini" id="article_delete_{{ forloop.counter }}" onclick="article_manage_delete({{ article.id }})">删除</button></td>
+        </tr>
+    {% endfor %}
+        <tr>
+          <td colspan="9">总共{{ article_sum }}篇文章</td>
+        </tr>
+      </tbody>
+  </table>
+
+  <!-- 分页 -->
+  <div id="page">
+    <div class="pagination">
+        <span class="step-links">
+            {% if articles.has_previous %}
+                <button class="btn btn-link" onclick="pagination_first()">首页</button>
+                <input type="hidden" value="?page=1" id="page_first">
+
+                <button class="btn btn-link" onclick="pagination_pre()">前一页</button>
+                <input type="hidden" value="?page={{ articles.previous_page_number }}" id="page_pre">
+            {% endif %}
+            <span class="current">
+               {{ articles.number }} / {{ articles.paginator.num_pages }}
+            </span>
+            {% if articles.has_next %}
+                <button class="btn btn-link" onclick="pagination_next()">后一页</button>
+                <input type="hidden" value="?page={{ articles.next_page_number }}" id="page_next">
+                <button class="btn btn-link" onclick="pagination_end()">尾页</button>
+                <input type="hidden" value="?page={{ articles.paginator.num_pages }}" id="page_end">
+            {% endif %}
+        </span>
+    </div>
+  </div>
+</div>

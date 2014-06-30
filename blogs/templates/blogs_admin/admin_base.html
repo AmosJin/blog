@@ -1,0 +1,108 @@
+{% extends "blogs_admin/base.html" %}
+{% load staticfiles %}
+
+<!-- 标题 -->
+{% block title %}
+	{{ blog.blog_title }} · 后台管理
+{% endblock %}
+
+<!-- 新加的CSS -->
+{% block css %}
+<link href="{% static 'blogs_admin/css/editor.css' %}" rel="stylesheet" />
+{% endblock %}
+
+<!-- 加载JS:必须放在前面的JS -->
+{% block js-head %}
+<script src="{% static 'blogs_admin/js/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'blogs_admin/js/django.ajax.post.js' %}" type="text/javascript"></script>
+<script src="{% static 'blogs_admin/js/jquery.hotkeys.js' %}" type="text/javascript"></script>
+<script src="{% static 'blogs_admin/js/bootstrap-wysiwyg.js' %}" type="text/javascript"></script>
+<script src="{% static 'blogs_admin/js/admin.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+<!-- 页头 -->
+{% block head %}
+<div id="head-bar" class="row-fluid navbar-fixed-top">
+	<div class="span3" id="front-home"><a href="{% url 'blogs:index' %}">网站</a></div>
+  	<div class="span6">—{{ blog.blog_title }} · 后台管理—</div>
+  	<div class="span2" id="user"><a href="#">{{ user }}</a></div>
+  	<div class="span1"><a href="{% url 'blogs:logout' %}">注销</a></div>
+</div>
+{% endblock %}
+
+<!-- 后台主体 -->
+{% block adminbody %}
+<div class="container-fluid" id="admin">
+		<div class="tabbable tabs-left" id="help-content">
+		<ul class="nav nav-tabs" id="nav-tab-fixed">
+			<li class="active"><a href="#welcome" data-toggle="tab"><i class="icon-home"></i> 欢迎</a></li>
+			<li class=""><a href="#new" data-toggle="tab" onclick="new_article()"><i class="icon-pencil"></i> 新建文章</a></li>
+			<li class=""><a href="#article" data-toggle="tab" onclick="article_manage()"><i class="icon-th-large"></i> 文章管理</a></li>
+			<li class=""><a href="#comment" data-toggle="tab"><i class="icon-comment"></i> 评论管理</a></li>
+			<li class=""><a href="#diy" data-toggle="tab"><i class="icon-leaf"></i> 博客自定义</a></li>
+			<li class=""><a href="#setting" data-toggle="tab"><i class="icon-wrench"></i> 网站设置</a></li>
+			<li class=""><a href="#user_center" data-toggle="tab"><i class="icon-user"></i> 用户中心</a></li>
+		</ul>
+
+		<div class="tab-content" id="nav-tab-content">
+			<div class="tab-pane active" id="welcome">
+				<blockquote><h3>欢迎</h3></blockquote>
+				<!-- 欢迎模块 -->
+				<div class="content">
+					<p class="lead">欢迎使用网站后台。</p>
+					<p class="lead">现阶段后台实现的功能如下：</p>
+						<ul>
+							<li>完整的文章创建和编辑功能</li>
+							<li>文章管理</li>
+						</ul>
+					
+				</div>
+				{% block welcome %}{% endblock %}
+			</div> 
+			<div class="tab-pane" id="new">
+				<blockquote><h3>新建文章</h3></blockquote>
+				<!-- 新建文章模块 -->
+				{% block new %}{% endblock %}
+				<div class="new"></div>
+			</div>
+			<div class="tab-pane" id="article">
+				<blockquote><h3>文章管理</h3><span id="article_area_extra_info" style="display:none"></span></blockquote>
+				<!-- 文章管理 -->
+				{% block article %}{% endblock %}
+				<div class="article"></div>
+			</div> 
+			<div class="tab-pane" id="comment">
+				<blockquote><h3>评论管理</h3></blockquote>
+				<!-- 评论管理模块 -->
+				{% block comment %}{% endblock %}
+			</div> 
+			<div class="tab-pane" id="diy">
+				<blockquote><h3>博客自定义</h3></blockquote>
+				<!-- 博客自定义模块 -->
+				{% block diy %}{% endblock %}
+			</div> 
+			<div class="tab-pane" id="setting">
+				<blockquote><h3>网站设置</h3></blockquote>
+				<!-- 网站设置模块 -->
+				{% block setting %}{% endblock %}
+			</div> 
+			<div class="tab-pane" id="user_center">
+				<blockquote><h3>用户中心</h3></blockquote>
+				<!-- 用户中心模块 -->
+				{% block user_center %}{% endblock %}
+			</div> 
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+<!-- 页脚 -->
+{% block footer %}
+{% endblock %}
+
+
+<!-- 加载的js -->
+{% block js %}
+<script src="{% static 'blogs_admin/js/bootstrap-tab.js' %}" type="text/javascript"></script>
+{% endblock %}

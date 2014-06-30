@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- 加载CSS -->
+    	<link href="{% static 'blogs/css/style.css' %}" rel="stylesheet" />
+    	<link href="{% static 'blogs/css/bootstrap.css' %}" rel="stylesheet" />
+
+    	<!-- 加载JS:必须放在前面的JS -->
+    	{% block js-head %}{% endblock %}
+	</head>
+
+	<body>
+		<!-- 页头 -->
+		<div class="row-fluid">
+			{% block head %}{% endblock %}
+		</div>
+
+		<!-- 主体 -->
+		<div class="container-fluid">
+			{% block body %}{% endblock %}
+
+			<!-- 分页 -->
+			<div class="pagination pagination-centered">
+				{% block pagination %}{% endblock %}
+			</div>
+
+			<!-- 评论模块 -->
+			{% block comment %}{% endblock %}
+		</div>
+
+		<!-- 页脚 -->
+		<div class="footer">
+			{{ blog.blog_copyright }}
+		</div>
+
+		<!-- 加载JS文件 -->
+    	<script src="{% static 'blogs/js/bootstrap.min.js' %}" type="text/javascript"></script>
+    	<script src="{% static 'blogs/js/jquery.min.js' %}" type="text/javascript"></script>    	
+    	{% block js %}{% endblock %}
+	</body>
+</html>

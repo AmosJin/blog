@@ -1,0 +1,26 @@
+<!-- 文章查看模块 -->
+<div class="content">
+	<div class="alert alert-error" id="article-preview-delete-alert" style="display:none;">
+		<strong>警告！</strong> 确认要删除 &quot; <span id="article_delete_article_title"></span> &quot; 这篇文章吗？</br>
+		<button class="btn btn-danger" type="button" onclick="article_delete_article_confirm({{ article.id }})">确认删除</button>
+		<button class="btn btn-success" type="button" onclick="article_delete_article_close()">取消</button>
+		<button class="close" onclick="article_delete_article_close()">&times;</button>
+	</div>
+
+	<!-- 文章提交成功查看区 -->
+	<div class="post-success">
+		<div class="alert alert-success" id="alert_success_change_article" style="display:none;">
+		  <strong>提示:</strong> 修改文章成功。
+		</div>
+		<div class="choice">
+        {% if article.article_visible %}
+	  		<button class="btn btn-mini btn-primary" type="button" value="{{ article.id }}" id="article_view_article_btn" onclick="view_article(this.value)">查看</button>
+        {% endif %}
+  			<button class="btn btn-mini btn-inverse" type="button" value="{{ article.id }}" id="article_reedit_article_btn" onclick="article_reedit_article(this.value)">再次编辑</button>
+  			<button class="btn btn-mini btn-danger" type="button" value="{{ article.id }}" id="article_delete_article_btn" onclick="article_delete_article_hint()">删除</button>
+		</div>
+		<div class="title">{{ article.article_title }}</div>
+		<div class="content">{{ article.article_content|safe }}</div>
+    <!-- 值隐藏区 -->
+	</div>
+</div>

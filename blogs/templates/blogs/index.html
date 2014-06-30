@@ -1,0 +1,63 @@
+{% extends "blogs/base.html" %}
+
+{% block title %}{{ blog.blog_title }}-首页{% endblock %}
+
+<!-- 页头 -->
+{% block head %}
+<div id="header-bg">
+	<div class="span12">
+		<div id="blog-intro" class="navbar-fixed-top">
+			<h1><span>{{ blog.blog_title }}</span></h1><br>
+			<p class="lead">
+			{% if blog.blog_sub_title_visible %}
+				<span>&quot; {{ blog.blog_sub_title }} &quot;</span>
+			{% endif %}
+			</p>
+		</div>
+	</div>
+</div>
+<div class="head-capture">{{ blog.blog_title|cut:" "|first }}</div>
+{% endblock %}
+
+<!-- 主体 -->
+{% block body %}
+{% if articles %}
+	{% for article in articles %}
+		<div class="article-extract">
+			<div class="title"><a href="{% url 'blogs:detail' article.id %}">{{ article.article_title }}</a></div>
+			<div class="extract">&nbsp;&nbsp;&nbsp;&nbsp;{{ article.article_content|striptags|truncatechars:600|safe }}</div>
+			<div class="extra">
+				<i class="icon-time" title="发布日期"></i> {{ article.article_date|date:"Y-M-d" }}&nbsp;&nbsp;
+				<i class="icon-heart" title="喜欢"></i> {{ article.article_favorite_times }}&nbsp;&nbsp;
+				<i class="icon-comment" title="评论"></i> {{ article.comment_set.all.count }}&nbsp;&nbsp;
+				<i class="icon-eye-open" title="浏览"></i> {{ article.article_browsed_times }}&nbsp;&nbsp;
+			</div>
+		</div>
+	{% endfor %}
+{% else %}
+	<div id="article_list">
+		<p>暂时没有文章！</p>
+	</div>
+{% endif %}
+{% endblock %}
+
+{# 分页 #}
+{% block pagination %}
+<div id="page">
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if articles.has_previous %}
+	            <a href="?page=1">首页</a>
+	            <a href="?page={{ articles.previous_page_number }}">前一页</a>
+	        {% endif %}
+	        <span class="current">
+	           {{ articles.number }} / {{ articles.paginator.num_pages }}
+	        </span>
+	        {% if articles.has_next %}
+	            <a href="?page={{ articles.next_page_number }}">后一页</a>
+	            <a href="?page={{ articles.paginator.num_pages }}">尾页</a>
+	        {% endif %}
+	    </span>
+	</div>
+</div>
+{% endblock %}
