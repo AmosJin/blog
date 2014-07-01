@@ -2,17 +2,13 @@
 > 这是一个基于Django框架的博客应用
 
 ### 一、安装环境
-1. python环境：2.x，推荐 2.7
+1. Python环境：2.x，推荐 2.7
 2. Django环境：1.6.5
 
 ### 二、安装指南
 1. 下载并解压源文件 blog.zip
-2. 开启Django自带的服务器。
-
-  > 切换到 /blog/ 文件目录下，执行
-    ` python manage.py runserver `
-  > 若成功，则会有如下提示
-  ：` Starting development server at http://127.0.0.1:8000/
+2. 开启Django自带的服务器。切换到 /blog/ 文件目录下，执行` python manage.py runserver `
+若成功，则会有如下提示` Starting development server at http://127.0.0.1:8000/
   Quit the server with CONTROL-C. `
 
 3. 应用初始化。 同步骤 2 的目录，
